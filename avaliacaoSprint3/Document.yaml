@@ -1,0 +1,267 @@
+openapi: 3.0.0
+info:
+  title: API de Estados
+  description: API para listar, atualizar, deletar e cadastrar os estados do Brasil
+  version: 0.0.1
+  contact:
+    name: Contate o Dev
+    email: bbreno.valadares@gmail.com
+  license:
+    name: "Licença Compass"
+servers:
+- url: http://localhost:8080
+  description: API da Avaliacao Sprint 3
+paths:
+  /api/states:
+    get:
+      summary: Recupera todos os estados do Brasil
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: number
+    # O Get está com erro porque o Swagger não aceita maps duplicados, e na avaliação é necessário fazer maps duplicados
+    get:
+      summary: Recupera todos os estados da determinada regiao
+      parameters:
+      - name: regiao
+        in: query
+        schema: 
+          type: string
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: number
+    # O Get está com erro porque o Swagger não aceita maps duplicados, e na avaliação é necessário fazer maps duplicados   
+    get:
+      summary: Lista todos os estados de acordo com a sua populacao de forma ascendente ou descendente
+      parameters:
+      - name: populacao
+        in: query
+        schema: 
+          type: string
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: number
+    # O Get está com erro porque o Swagger não aceita maps duplicados, e na avaliação é necessário fazer maps duplicados          
+    get:
+      summary: Lista todos os estados de acordo com a sua area de forma ascendente ou descendente
+      parameters:
+      - name: area
+        in: query
+        schema: 
+          type: string
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: number
+      
+    post:
+      summary: "Adicionando um novo estado"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                regiao:
+                  type: string
+                capital:
+                  type: string
+                populacao:
+                  type: integer
+                area:
+                  type: number  
+      responses:
+        201:
+          description: "Sucesso"
+          content: 
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  regiao:
+                    type: string
+                  capital:
+                    type: string
+                  populacao:
+                    type: integer
+                  area:
+                    type: number 
+  /api/states/{id}:
+    parameters: 
+      - name: id
+        in: path
+        schema: 
+          type: integer
+        required: true
+    get:
+      summary: Recupera um estado pelo ID
+      responses: 
+        200:
+         description: Sucesso
+         content:
+            application/json: 
+              schema:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: number
+        404:
+          description: Estado não encontrado
+          content: 
+            application/json:
+              example: "Not Found"
+    put:
+      summary: Atualiza o estado pelo ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: 
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  regiao:
+                    type: string
+                  capital:
+                    type: string
+                  populacao:
+                    type: integer
+                  area:
+                    type: number
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: number
+        404: 
+          description: Estado não encontrado
+          content: 
+            application/json:
+              example: "Not Found"
+    delete:
+      summary: Deleta o estado pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              example: "Deletado com sucesso"
+            
+        404:
+          description: Estado não encontrado
+          content: 
+            application/json:
+              example: "Not Found"
+              
+    
