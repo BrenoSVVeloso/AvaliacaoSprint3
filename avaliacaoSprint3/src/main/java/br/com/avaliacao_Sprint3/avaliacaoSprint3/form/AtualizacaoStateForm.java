@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.State;
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.repository.StateRepository;
-
+//Tipo usado na coleta dos dados do Usuário na atualização
 public class AtualizacaoStateForm {
     @NotNull
     private double area;

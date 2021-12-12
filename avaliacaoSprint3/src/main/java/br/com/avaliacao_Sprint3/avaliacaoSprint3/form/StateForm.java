@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.Regiao;
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.State;
-
+//Tipo usado na coleta dos dados do usuário
 public class StateForm {
 
     @NotNull @Length(min = 4)

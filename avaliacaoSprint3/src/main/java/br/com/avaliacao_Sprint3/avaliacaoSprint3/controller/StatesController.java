@@ -30,7 +30,7 @@ import br.com.avaliacao_Sprint3.avaliacaoSprint3.form.StateForm;
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.Regiao;
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.State;
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.repository.StateRepository;
-
+//Controller do estado
 @RequestMapping("/api/states")
 @RestController
 public class StatesController {
@@ -46,7 +46,7 @@ public class StatesController {
         return StateDto.converter(states);
     }
 
-
+    //Cadastra um estado
     @PostMapping
     @Transactional
     public ResponseEntity<StateDto> cadastrar(@RequestBody @Valid StateForm form, UriComponentsBuilder uriBuilder){
@@ -57,10 +57,11 @@ public class StatesController {
     }
 
 
-   
+    //Lista um Estado com base em seu id, com a variável passada no path
     @GetMapping("/{id}")
     public ResponseEntity<StateDto> listaUmEstado(@PathVariable Long id){
         Optional<State> optional = statesRepository.findById(id);
+        //Verifica se existe esse id
         if(optional.isPresent()){
             State state = optional.get();
             return ResponseEntity.ok(StateDto.converter(state));
@@ -68,18 +69,19 @@ public class StatesController {
         return ResponseEntity.notFound().build();
     }
 
-
+    //Lista os estados por região a partir de um query param, método GET
     //@GetMapping
     @RequestMapping(value = "", params = "regiao", method = RequestMethod.GET)
     public List<StateDto> listaPorRegiao(@RequestParam(required = false, name = "regiao") String regiao){
         
         try {
+            //Verifica se a região é nula ou válida
             if(regiao == null ||  !(Arrays.stream(Regiao.values()).anyMatch(t -> t.name().equals(regiao)))){
 
                 throw new NullPointerException();
 
             }else{
-
+                //Transforma a string região no enum Região
                 Regiao regiaoFiltrada = Regiao.valueOf(regiao);
                 List<State> states = statesRepository.findByRegiao(regiaoFiltrada);
                 return  StateDto.converter(states);
@@ -90,31 +92,38 @@ public class StatesController {
         return Collections.emptyList();
     }
 
+    //Lista os estados de acordo com a população. A query param população pode ter valor ASC OU DESC
     //@GetMapping
     @RequestMapping(value = "", params = "populacao", method = RequestMethod.GET)
     public List<StateDto> listaEstadosPorMaiorPopulacao(@RequestParam(required = false, name = "populacao") String regiao){
         List<State> states = statesRepository.findAll();
+        //Ordena os estados de acordo com a população
         states.sort(Comparator.comparing(State::getPopulacao));
+        //Se a query for ASC retorna
         if(regiao.equals("ASC")){
             
             return StateDto.converter(states);
-
+        
+        //Se for DESC reverte e retorna
         }else if(regiao.equals("DESC")){
             Collections.reverse(states);
             return StateDto.converter(states);
         }
+        
         return Collections.emptyList();  
     }
 
+    //Lista os estados de acordo com a área. A query param área pode ter valor ASC OU DESC
     //@GetMapping
     @RequestMapping(value = "", params = "area", method = RequestMethod.GET)
     public List<StateDto> listaEstadosPorMaiorArea(@RequestParam(required = false, name = "area") String area){
         List<State> states = statesRepository.findAll();
+        //Ordena os estados de acordo com a área
         states.sort(Comparator.comparing(State::getArea));
-        
+        //Se a query for ASC retorna
         if(area.equals("ASC")){
             return StateDto.converter(states);
-
+        //Se for DESC reverte e retorna
        }else if(area.equals("DESC")){
             
             Collections.reverse(states);
@@ -124,9 +133,11 @@ public class StatesController {
        return Collections.emptyList();
     }
 
+    //Deleta um estado de acordo com o ID, com a variável passada no path
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id){
         Optional<State> optional = statesRepository.findById(id);
+        //Verifica se o Estado existe
         if(optional.isPresent()){
             statesRepository.deleteById(id);
             return ResponseEntity.ok().build();
@@ -134,9 +145,11 @@ public class StatesController {
         return ResponseEntity.notFound().build();
     }
 
+    //Atualiza um estado de acordo com o ID, com a variável passada no path
     @PutMapping("/{id}")
     public ResponseEntity<StateDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoStateForm form){
         Optional<State> optional = statesRepository.findById(id);
+        //Verifica se o Estado existe
         if(optional.isPresent()){
             State state = form.atualizar(id, statesRepository);
             return ResponseEntity.ok(new StateDto(state));

@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.Regiao;
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.State;
-
+//Tipo usado no envio de dados para a tela
 public class StateDto {
     private Long id;
     private String nome;

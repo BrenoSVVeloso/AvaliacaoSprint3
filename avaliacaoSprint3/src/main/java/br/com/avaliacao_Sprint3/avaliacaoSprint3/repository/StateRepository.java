@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.Regiao;
 import br.com.avaliacao_Sprint3.avaliacaoSprint3.modelo.State;
-
+//Usado para acessar o banco de dados
 public interface StateRepository extends JpaRepository<State,Long>{
-
+    
     List<State> findByRegiao(Regiao regiaoState);
 
     State findByNome(@NotNull @NotEmpty @Length(min = 4) String nome);
